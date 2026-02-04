@@ -3,7 +3,6 @@ import { procesar } from "../../lib/procesar";
 export default function handler(req, res) {
   try {
     const nombre = req.query.nombre || "anónimo";
-
     const data = procesar(nombre);
 
     return res.status(200).json({
@@ -18,4 +17,3 @@ export default function handler(req, res) {
     });
   }
 }
-
