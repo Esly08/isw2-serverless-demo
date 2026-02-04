@@ -1,5 +1,5 @@
 export default function handler(req, res) {
-  const nombre = req.query.nombre || "anónimo";
+  const { nombre = "anónimo" } = req.query;
 
   // Simular error
   if (nombre === "error") {
@@ -9,7 +9,8 @@ export default function handler(req, res) {
     });
   }
 
-  res.status(200).json({
+  // Caso normal
+  return res.status(200).json({
     resultado: `Hola ${nombre}`,
     timestamp: new Date().toISOString()
   });
