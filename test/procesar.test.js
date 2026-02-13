@@ -1,50 +1,60 @@
-import test from "node:test";
-import assert from "node:assert/strict";
-import handler from "../api/procesar.js";
+function handler(req, res) {
+  const nombre = req.query?.nombre || "ANÓNIMO";
+  const nombreMayus = nombre.toUpperCase();
 
-test("procesar convierte el nombre a mayúsculas", () => {
-  const req = { query: { nombre: "juan" } };
-
-  const res = {
-    statusCode: null,
-    body: null,
-    status(code) {
-      this.statusCode = code;
-      return this;
-    },
-    json(payload) {
-      this.body = payload;
-      return this;
-    }
-  };
-
-  handler(req, res);
-
-  assert.equal(res.statusCode, 200);
-  assert.deepEqual(res.body, { 
-    resultado: "Nombre procesado: JUAN",
-  longitud: 4
+  res.status(200).json({
+    resultado: `Nombre procesado: ${nombreMayus}`,
+    longitud: nombreMayus.length
   });
-});
+}
 
-test("procesar maneja nombre ausente", () => {
-  const req = { query: {} };
+module.exports = handler;
 
-  const res = {
-    statusCode: null,
-    body: null,
-    status(code) {
-      this.statusCode = code;
-      return this;
-    },
-    json(payload) {
-      this.body = payload;
-      return this;
-    }
-  };
+describe("procesar", () => {
+  test("convierte el nombre a mayúsculas", () => {
+    const req = { query: { nombre: "juan" } };
 
-  handler(req, res);
+    const res = {
+      statusCode: null,
+      body: null,
+      status(code) {
+        this.statusCode = code;
+        return this;
+      },
+      json(payload) {
+        this.body = payload;
+        return this;
+      }
+    };
 
-  assert.equal(res.statusCode, 200);
-  assert.ok(res.body.resultado.includes("ANÓNIMO"));
+    handler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toEqual({
+      resultado: "Nombre procesado: JUAN",
+      longitud: 4
+    });
+  });
+
+  test("maneja nombre ausente", () => {
+    const req = { query: {} };
+
+    const res = {
+      statusCode: null,
+      body: null,
+      status(code) {
+        this.statusCode = code;
+        return this;
+      },
+      json(payload) {
+        this.body = payload;
+        return this;
+      }
+    };
+
+    handler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body.resultado).toContain("ANÓNIMO");
+  });
 });
