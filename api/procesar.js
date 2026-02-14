@@ -5,7 +5,7 @@ export default function handler(req, res) {
   const finalNombre = normalizado === "" ? "anónimo" : normalizado;
 
   const payload = {
-    resultado: `Nombre procesado: ${finalNombre.toUpperCase()}`,
+    resultado: `NOMBRE PROCESADO: ${finalNombre.toUpperCase()}`,
     longitud: finalNombre.length
   };
 

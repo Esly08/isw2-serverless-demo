@@ -1,4 +1,4 @@
-import { handler } from "../api/procesar.js";
+import handler from "../api/procesar.js";
 
 describe("Regla de calidad - mayúsculas obligatorias", () => {
   test("El resultado debe estar completamente en mayúsculas", () => {
