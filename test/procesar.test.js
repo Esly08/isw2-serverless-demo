@@ -1,12 +1,11 @@
 function handler(req, res) {
-  const nombre = req.query?.nombre || "ANÓNIMO";
-  const nombreMayus = String(nombre).toUpperCase();
+  const nombre = req.query?.nombre ?? "ANÓNIMO";  // Usa ?? en lugar de ||
+  const nombreMayus = nombre.toUpperCase();
   res.status(200).json({
     resultado: `Nombre procesado: ${nombreMayus}`,
     longitud: nombreMayus.length
   });
 }
-
 module.exports = handler;
 
 describe("procesar", () => {
